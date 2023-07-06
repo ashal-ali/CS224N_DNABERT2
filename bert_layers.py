@@ -813,8 +813,8 @@ class BertForMaskedLM(BertPreTrainedModel):
         return MaskedLMOutput(
             loss=loss,
             logits=prediction_scores,
-            hidden_states=None,
-            attentions=None,
+            hidden_states=outputs.hidden_states,
+            attentions=outputs.attention,
         )
 
     def prepare_inputs_for_generation(self, input_ids: torch.Tensor,
@@ -972,7 +972,7 @@ class BertForSequenceClassification(BertPreTrainedModel):
         return SequenceClassifierOutput(
             loss=loss,
             logits=logits,
-            hidden_states=None,
-            attentions=None,
+            hidden_states=outputs.hidden_states,
+            attentions=outputs.attention,
         )
 
