@@ -698,38 +698,6 @@ class BertForMaskedLM(BertPreTrainedModel):
         # Initialize weights and apply final processing
         self.post_init()
 
-    @classmethod
-    def from_composer(cls,
-                      pretrained_checkpoint,
-                      state_dict=None,
-                      cache_dir=None,
-                      from_tf=False,
-                      config=None,
-                      *inputs,
-                      **kwargs):
-        """Load from pre-trained."""
-        model = cls(config, *inputs, **kwargs)
-        if from_tf:
-            raise ValueError(
-                'Mosaic BERT does not support loading TensorFlow weights.')
-
-        state_dict = torch.load(pretrained_checkpoint)
-        # If the state_dict was saved after wrapping with `composer.HuggingFaceModel`, it takes on the `model` prefix
-        consume_prefix_in_state_dict_if_present(state_dict, prefix='model.')
-        missing_keys, unexpected_keys = model.load_state_dict(state_dict,
-                                                              strict=False)
-
-        if len(missing_keys) > 0:
-            logger.warning(
-                f"Found these missing keys in the checkpoint: {', '.join(missing_keys)}"
-            )
-        if len(unexpected_keys) > 0:
-            logger.warning(
-                f"Found these unexpected keys in the checkpoint: {', '.join(unexpected_keys)}"
-            )
-
-        return model
-
     def get_output_embeddings(self):
         return self.cls.predictions.decoder
 
@@ -786,7 +754,7 @@ class BertForMaskedLM(BertPreTrainedModel):
             return_dict=return_dict,
             masked_tokens_mask=masked_tokens_mask,
         )
-
+        
         sequence_output = outputs[0]
         prediction_scores = self.cls(sequence_output)
 
@@ -813,8 +781,8 @@ class BertForMaskedLM(BertPreTrainedModel):
         return MaskedLMOutput(
             loss=loss,
             logits=prediction_scores,
-            hidden_states=outputs.hidden_states,
-            attentions=outputs.attention,
+            hidden_states=outputs[0],
+            attentions=None,
         )
 
     def prepare_inputs_for_generation(self, input_ids: torch.Tensor,
@@ -868,37 +836,6 @@ class BertForSequenceClassification(BertPreTrainedModel):
         # Initialize weights and apply final processing
         self.post_init()
 
-    @classmethod
-    def from_composer(cls,
-                      pretrained_checkpoint,
-                      state_dict=None,
-                      cache_dir=None,
-                      from_tf=False,
-                      config=None,
-                      *inputs,
-                      **kwargs):
-        """Load from pre-trained."""
-        model = cls(config, *inputs, **kwargs)
-        if from_tf:
-            raise ValueError(
-                'Mosaic BERT does not support loading TensorFlow weights.')
-
-        state_dict = torch.load(pretrained_checkpoint)
-        # If the state_dict was saved after wrapping with `composer.HuggingFaceModel`, it takes on the `model` prefix
-        consume_prefix_in_state_dict_if_present(state_dict, prefix='model.')
-        missing_keys, unexpected_keys = model.load_state_dict(state_dict,
-                                                              strict=False)
-
-        if len(missing_keys) > 0:
-            logger.warning(
-                f"Found these missing keys in the checkpoint: {', '.join(missing_keys)}"
-            )
-        if len(unexpected_keys) > 0:
-            logger.warning(
-                f"Found these unexpected keys in the checkpoint: {', '.join(unexpected_keys)}"
-            )
-
-        return model
 
     def forward(
         self,
@@ -972,7 +909,7 @@ class BertForSequenceClassification(BertPreTrainedModel):
         return SequenceClassifierOutput(
             loss=loss,
             logits=logits,
-            hidden_states=outputs.hidden_states,
-            attentions=outputs.attention,
+            hidden_states=outputs[0],
+            attentions=None,
         )
 
