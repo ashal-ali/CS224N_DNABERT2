@@ -6,6 +6,9 @@ tags:
 - biology
 - medical
 ---
+This is the official pre-trained model introduced in [DNABERT-2: Efficient Foundation Model and Benchmark For Multi-Species Genome
+](https://arxiv.org/pdf/2306.15006.pdf).
+
 DNABERT-2 is a transformer-based genome foundation model trained on multi-species genome. 
 
 To load the model from huggingface:
