@@ -18,7 +18,7 @@ from torch.nn.modules.utils import consume_prefix_in_state_dict_if_present
 from transformers.activations import ACT2FN
 from transformers.modeling_outputs import (MaskedLMOutput,
                                            SequenceClassifierOutput)
-from transformers.models.bert.modeling_bert import BertPreTrainedModel
+from transformers.models.bert.modeling_bert import BertPreTrainedModel, PreTrainedModel
 
 from .bert_padding import (index_first_axis,
                                             index_put_first_axis, pad_input,
@@ -521,7 +521,7 @@ class BertPredictionHeadTransform(nn.Module):
         return hidden_states
 
 
-class BertModel(BertPreTrainedModel):
+class BertModel(PreTrainedModel):
     """Overall BERT model.
 
     Args:
