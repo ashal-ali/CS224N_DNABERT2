@@ -522,7 +522,7 @@ class BertPredictionHeadTransform(nn.Module):
         return hidden_states
 
 
-class BertModel(PreTrainedModel):
+class BertModel(BertPreTrainedModel):
     """Overall BERT model.
 
     Args:
