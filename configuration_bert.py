@@ -1,10 +1,10 @@
 # Copyright 2022 MosaicML Examples authors
 # SPDX-License-Identifier: Apache-2.0
 
-from transformers import BertConfig as TransformersBertConfig
+from transformers.configuration_utils import PretrainedConfig
 
 
-class BertConfig(TransformersBertConfig):
+class BertConfig(PretrainedConfig):
 
     def __init__(
         self,
