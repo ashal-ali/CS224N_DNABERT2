@@ -18,6 +18,7 @@ from torch.nn.modules.utils import consume_prefix_in_state_dict_if_present
 from transformers.activations import ACT2FN
 from transformers.modeling_outputs import (MaskedLMOutput,
                                            SequenceClassifierOutput)
+from transformers.modeling_bert import BertPreTrainedModel
 from transformers.modeling_utils import PreTrainedModel
 
 from .bert_padding import (index_first_axis,
@@ -521,7 +522,7 @@ class BertPredictionHeadTransform(nn.Module):
         return hidden_states
 
 
-class BertModel(PreTrainedModel):
+class BertModel(BertPreTrainedModel):
     """Overall BERT model.
 
     Args:
@@ -681,7 +682,7 @@ class BertOnlyNSPHead(nn.Module):
 
 
 
-class BertForMaskedLM(PreTrainedModel):
+class BertForMaskedLM(BertPreTrainedModel):
 
     def __init__(self, config):
         super().__init__(config)
@@ -810,7 +811,7 @@ class BertForMaskedLM(PreTrainedModel):
 
 
 
-class BertForSequenceClassification(PreTrainedModel):
+class BertForSequenceClassification(BertPreTrainedModel):
     """Bert Model transformer with a sequence classification/regression head.
 
     This head is just a linear layer on top of the pooled output. Used for,
