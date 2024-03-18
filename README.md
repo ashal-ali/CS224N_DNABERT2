@@ -9,6 +9,8 @@ tags:
 This is the official pre-trained model introduced in [DNABERT-2: Efficient Foundation Model and Benchmark For Multi-Species Genome
 ](https://arxiv.org/pdf/2306.15006.pdf).
 
+We sincerely appreciate the MosaicML team for the [MosaicBERT](https://openreview.net/forum?id=5zipcfLC2Z) implementation, which serves as the base of DNABERT-2 development. 
+
 DNABERT-2 is a transformer-based genome foundation model trained on multi-species genome. 
 
 To load the model from huggingface:
