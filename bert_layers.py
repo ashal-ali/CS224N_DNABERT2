@@ -24,7 +24,7 @@ from transformers.modeling_utils import PreTrainedModel
 from .bert_padding import (index_first_axis,
                                             index_put_first_axis, pad_input,
                                             unpad_input, unpad_input_only)
-
+from .configuration_bert import BertConfig
 try:
     from .flash_attn_triton import flash_attn_qkvpacked_func
 except ImportError as e:
@@ -564,7 +564,7 @@ class BertModel(BertPreTrainedModel):
     all_encoder_layers, pooled_output = model(input_ids, token_type_ids, input_mask)
     ```
     """
-
+    config_class = BertConfig
     def __init__(self, config, add_pooling_layer=True):
         super(BertModel, self).__init__(config)
         self.embeddings = BertEmbeddings(config)
